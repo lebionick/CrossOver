@@ -53,11 +53,15 @@ int[] crossOver(int[] a, int[] b){
   if(a.length != b.length)
     return null;
    int[] result = new int[a.length];
+   for(int i = 0; i < result.length; i++)
+     result[i] = -1;
    //find if we have included number from a or b already in child
    for(int i = 0; i < a.length; i++){    
      boolean hasb = false;
      boolean hasa = false;
-     for(int j = 0; j < a.length; j++){
+     for(int j = 0; j < result.length; j++){
+       if(result[j] == -1)
+         break;
        if(hasa == false)
          if(result[j] == a[i]){
            hasa = true;
@@ -77,11 +81,14 @@ int[] crossOver(int[] a, int[] b){
         //we pick the first different from the first array
         for(int j = 0; j < a.length; j++){
           boolean has = false;
-          for(int k = 0; k < a.length; k++)
+          for(int k = 0; k < result.length; k++){
+            if(result[k] == -1)
+              break;
             if(result[k] == a[j]){
               has = true;
               break;
             }
+          }
           if(!has)
             result[i] = a[j];
         }
@@ -94,7 +101,7 @@ int[] crossOver(int[] a, int[] b){
        result[i] = b[i];
        else {
          //exact number was revealed empirically
-         if(random(1) < 0.49865){
+         if(random(1) < 0.5004){
            result[i] = a[i];
          }
          else
